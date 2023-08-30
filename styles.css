@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding:0; 
+    border:0;
+}
+
+body {
+    background-color: gray;
+}
+
+#grid-wrapper {
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    place-content: center;
+}
+
+#grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* border: 5px solid red; */
+    width: 300px;
+    height: 300px;
+    /* width: 66vw;
+    height: 66vh; */
+}
+
+.tile {
+    border: 2px solid blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
