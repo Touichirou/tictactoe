@@ -1,35 +1,55 @@
+:root {
+    --header-background-color: #f88e95;
+    --body-background-color: #ffd1cf;
+    --border-and-fill-color: beige;
+}
+
 * {
     margin: 0;
     padding:0; 
     border:0;
+
 }
 
 body {
-    background-color: gray;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 50px;
+    color: var(--border-and-fill-color);
+}
+
+#header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--header-background-color);
 }
 
 #grid-wrapper {
+    background-color: var(--body-background-color);
     display: grid;
-    width: 100vw;
-    height: 100vh;
+    height: 90vh;
     place-content: center;
 }
 
 #grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    /* border: 5px solid red; */
     width: 300px;
     height: 300px;
-    /* width: 66vw;
-    height: 66vh; */
+    gap: 10px;
 }
 
 .tile {
-    border: 2px solid blue;
+    border: 2px solid var(--border-and-fill-color);
+    background-color: var(--header-background-color);
+    color: var(--border-and-fill-color);
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 48px;
+    height: 100px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
