@@ -9,8 +9,31 @@
 </head>
 <body>
     
+    <div id="start">
+        <button id="start-button">Start</button>
+    </div>
+
+    <div id="player-input-screen" style="display: none;">
+        <form id="player-input-form">
+            <div>
+            <!-- <label for="player-one">Player X's Name</label> -->
+            <input type="text" placeholder="Player X's name" id="player-one" name="player-one" maxlength="15" required>
+            </div>
+
+            <div>
+                <button id="load-game" type="submit">Begin</button>
+            </div>
+
+            <div>
+            <!-- <label for="player-two">Player O's Name</label> -->
+            <input type="text" placeholder="Player O's name" id="player-two" name="player-two" maxlength="15" required>
+            </div>
+        </form>
+    </div>
+
+    <div id="game" style="display: none;">
     <div id="header">
-    <h1 id="title">Tic Tac Toe</h1>
+    <h1 id="title">Tic-Tac-Toe</h1>
     </div> 
     <div id="grid-wrapper">
     
@@ -26,7 +49,7 @@
             <div class="tile" id="9"></div>
         </div>
     </div>
-    
+    </div>
     <script src="myscripts.js" async defer></script>
 </body>
 </html>

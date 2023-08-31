@@ -1,8 +1,38 @@
 const tiles = document.querySelectorAll("div.tile");
+const startButton = document.getElementById("start-button");
+const startScreen = document.getElementById("start");
+const playerInputScreen = document.getElementById("player-input-screen");
+const loadButton = document.getElementById("load-game");
+const playerOne = document.getElementById("player-one");
+const playerTwo = document.getElementById("player-two");
+const playerInputForm = document.getElementById("player-input-form");
+const game = document.getElementById("game");
 
 // module that displays the gameboard and allows playrs to draw markers
 const gameboard = (() => { 
     const markers = ["x", "o", "x", "o", "x", "o", "x", "o", "x"];
+
+    startButton.addEventListener('click', () => {
+        start.style.display = "none";
+        playerInputScreen.style.display = "block";
+        
+    })
+
+    loadButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (!playerInputForm.checkValidity()) {
+            alert("Please input the names of both players.")
+            return;
+        } 
+        if (playerOne.value.toLowerCase() === playerTwo.value.toLowerCase()) {
+            alert("Player names must be unique. Player names are not case-sensitive.")
+            return;
+        }
+            playerInputScreen.style.display = "none";
+            game.style.display = "block";
+        
+    });
+    
 
     const drawToBoard = () => {
         for (let index = 0; index < markers.length; index++) {
