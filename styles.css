@@ -110,13 +110,23 @@ h1 {
 
 #player-one-details,
 #player-two-details {
-    border: 2px solid red;
+    background-color: var(--header-background-color);
     width: 150px;
     height: 150px;
     font-size: calc(var(--font-size) / 3);
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    color: var(--border-and-fill-color);
+}
+
+#player-one-details {
+    border: 5px solid green;
+}
+
+#player-two-details {
+    border: 5px solid red;
 }
 
 .tile {
@@ -124,6 +134,8 @@ h1 {
     background-color: var(--header-background-color);
     color: var(--border-and-fill-color);
     display: flex;
+    flex-grow: 0;
+    height: 100px;
     justify-content: center;
     align-items: center;
     font-size: 48px;

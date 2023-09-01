@@ -1,16 +1,18 @@
 const tiles = document.querySelectorAll("div.tile");
-const startButton = document.getElementById("start-button");
-const startScreen = document.getElementById("start");
-const playerInputScreen = document.getElementById("player-input-screen");
-const loadButton = document.getElementById("load-game");
-const playerOne = document.getElementById("player-one");
-const playerTwo = document.getElementById("player-two");
-const playerInputForm = document.getElementById("player-input-form");
-const game = document.getElementById("game");
 
 // module that displays the gameboard and allows playrs to draw markers
 const gameboard = (() => { 
     const markers = ["x", "o", "x", "o", "x", "o", "x", "o", "x"];
+    const startButton = document.getElementById("start-button");
+    const startScreen = document.getElementById("start");
+    const playerInputScreen = document.getElementById("player-input-screen");
+    const loadButton = document.getElementById("load-game");
+    const playerOne = document.getElementById("player-one");
+    const playerTwo = document.getElementById("player-two");
+    const playerOneNameDisplay = document.getElementById("player-one-details");
+    const playerTwoNameDisplay = document.getElementById("player-two-details");
+    const playerInputForm = document.getElementById("player-input-form");
+    const game = document.getElementById("game");
 
     startButton.addEventListener('click', () => {
         start.style.display = "none";
@@ -30,7 +32,10 @@ const gameboard = (() => {
         }
             playerInputScreen.style.display = "none";
             game.style.display = "block";
-        
+            const playerX = playerFactory(playerOne.value, 'X');
+            const playerO = playerFactory(playerTwo.value, 'O');
+            playerOneNameDisplay.innerHTML = playerX.name + '<br />' + '<br />' + playerX.marker;
+            playerTwoNameDisplay.innerHTML = playerO.name + '<br />' + '<br />' + playerO.marker;
     });
     
 
@@ -41,6 +46,13 @@ const gameboard = (() => {
                 tiles[index].innerHTML += markers.pop();
                 gameLogic.checkWin();
                 }
+                if (markers.length % 2 === 0) {
+                    playerOneNameDisplay.style.borderColor = "red";
+                    playerTwoNameDisplay.style.borderColor = "green";
+                } else {
+                    playerOneNameDisplay.style.borderColor = "green";
+                    playerTwoNameDisplay.style.borderColor = "red";
+                }
             })
         }
     };
@@ -48,6 +60,7 @@ const gameboard = (() => {
     return {
         markers,
         drawToBoard,
+        tiles,
     };
 })();
 
@@ -93,6 +106,10 @@ const checkWin = () => {
             return;
         }
     }
+
+const endGame = () => {
+    // endgame logic here
+}
     return {
         checkWin
     };
@@ -100,9 +117,11 @@ const checkWin = () => {
 
 // factory that returns player objects
 const playerFactory = (name, marker) => {
+    let words = name.split(" ");
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    }
+    name = words.join(" ");
     return { name, marker };
 }
 
-const horatio = playerFactory('horatio', 'x');
-console.log(horatio.name);
-console.log(horatio.marker);
