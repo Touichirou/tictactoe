@@ -12,6 +12,7 @@ const playerFactory = (name, marker) => {
 const gameboard = (() => { 
     const tiles = document.querySelectorAll("div.tile");
     const markers = ["x", "o", "x", "o", "x", "o", "x", "o", "x"];
+    let currentMarker = 8;
     const startButton = document.getElementById("start-button");
     const startScreen = document.getElementById("start");
     const playerInputScreen = document.getElementById("player-input-screen");
@@ -21,12 +22,15 @@ const gameboard = (() => {
     const playerOneNameDisplay = document.getElementById("player-one-details");
     const playerTwoNameDisplay = document.getElementById("player-two-details");
     const playerInputForm = document.getElementById("player-input-form");
+    const playAgainButton = document.getElementById("play-again-button");
+    const quitButton = document.getElementById("quit-button");
     const game = document.getElementById("game");
     const playerX = playerFactory("placeholder", "X");
     const playerO = playerFactory("placeholder", "O");
+    
 
     startButton.addEventListener('click', () => {
-        start.style.display = "none";
+        startScreen.style.display = "none";
         playerInputScreen.style.display = "grid";
         
     })
@@ -34,7 +38,7 @@ const gameboard = (() => {
     loadButton.addEventListener('click', (event) => {
         event.preventDefault();
         if (!playerInputForm.checkValidity()) {
-            alert("Please input the names of both players.")
+            playerInputForm.reportValidity();
             return;
         } 
         if (playerOne.value.toLowerCase() === playerTwo.value.toLowerCase()) {
@@ -48,18 +52,38 @@ const gameboard = (() => {
             playerOneNameDisplay.innerHTML = playerX.name + '<br />' + '<br />' + playerX.marker;
             playerTwoNameDisplay.innerHTML = playerO.name + '<br />' + '<br />' + playerO.marker;
     });
+
+    const reset = () => {
+        currentMarker = 8;
+        tiles.forEach(tile => {
+            tile.innerHTML = "";
+        });
+        gameLogic.winnerScreen.style.display = "none";
+        playerOneNameDisplay.style.borderColor = "green";
+        playerTwoNameDisplay.style.borderColor = "#ffd1cf";
+    };
+
+    playAgainButton.addEventListener('click', () => {
+        reset();
+        game.style.display = "block";
+    });
+
+    quitButton.addEventListener('click', () => {
+        reset();
+        startScreen.style.display = "grid";
+        
+    })
     
 
     const drawToBoard = () => {
         for (let index = 0; index < markers.length; index++) {
             tiles[index].addEventListener('click', () => {
                 if (tiles[index].innerHTML === "") {
-                tiles[index].innerHTML += markers[markers.length-1];
+                tiles[index].innerHTML += markers[currentMarker];
                 gameLogic.checkWin();
-                markers.pop();
-                
+                currentMarker--;
                 }
-                if (markers.length % 2 === 0) {
+                if (currentMarker % 2 !== 0) {
                     playerOneNameDisplay.style.borderColor = "#ffd1cf";
                     playerTwoNameDisplay.style.borderColor = "green";
                 } else {
@@ -69,9 +93,16 @@ const gameboard = (() => {
             })
         }
     };
+
+const getCurrentMarker = () => {
+    return currentMarker;
+}
+
     drawToBoard()
     return {
         markers,
+        currentMarker,
+        getCurrentMarker,
         drawToBoard,
         tiles,
         game,
@@ -108,7 +139,7 @@ const checkWin = () => {
             endGameWinner();
             return;
         }
-        if (gameboard.markers.length === 1) {
+        if (gameboard.getCurrentMarker() === 0) {
             endGameDraw();
             return;
         }
@@ -117,10 +148,10 @@ const checkWin = () => {
 const endGameWinner = () => {
     gameboard.game.style.display = "none";
     winnerScreen.style.display = "flex";
-    if (gameboard.markers[gameboard.markers.length-1] === "x") {
-        winnerMessage.innerHTML += "The winner is" + '<br />' + '<br />' + gameboard.playerX.name;
+    if (gameboard.getCurrentMarker() % 2 === 0) {
+        winnerMessage.innerHTML = "The winner is" + '<br />' + '<br />' + gameboard.playerX.name;
     } else {
-       winnerMessage.innerHTML += "The winner is" + '<br />' + '<br />' + gameboard.playerO.name;
+       winnerMessage.innerHTML = "The winner is" + '<br />' + '<br />' + gameboard.playerO.name;
     }
     return;
 };
@@ -128,11 +159,12 @@ const endGameWinner = () => {
 const endGameDraw = () => {
     gameboard.game.style.display = "none";
     winnerScreen.style.display = "flex";
-    winnerMessage.innerHTML += "It's a tie!"
+    winnerMessage.innerHTML = "It's a tie!"
     return;
 };
     return {
-        checkWin
+        checkWin,
+        winnerScreen
     };
 })();
 
